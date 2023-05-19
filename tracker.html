@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Singapore Public Bus Registration Number Tracker</title>
-  <p>This tracker <strong>only tracks buses with bus registration number starting with 'SG'</strong>.</p>
-  <p>Enter the registration number without the 'SG'.</p>
-  <p><em>Example: For SG1000G, type '1000'</em></p>
+  <title>Bus Registration Tracker</title>
   <style>
     /* Add some basic styling */
     body {
@@ -36,7 +33,10 @@
 </head>
 <body>
   <div class="container">
-    <h2>Bus Registration Number Tracker</h2>
+    <h2>Public Bus Registration Tracker</h2>
+    <p>This tracker <strong>only tracks buses with bus registration number starting with 'SG'</strong>.</p>
+    <p>Enter the registration number without the 'SG'.</p>
+    <p><em>Example: For SG1000G, type '1000'</em></p>
     <input type="text" id="regNumber" placeholder="Enter bus registration number">
     <button onclick="trackBus()">Track</button>
     <div id="result"></div>
