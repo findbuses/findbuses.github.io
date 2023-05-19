@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bus Registration Number Tracker</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    #result {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Bus Registration Number Tracker</h2>
+    <input type="text" id="regNumber" placeholder="Enter bus registration number">
+    <button onclick="trackBus()">Track</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function trackBus() {
+      var regNumber = document.getElementById('regNumber').value;
+
+      // Array of bus details
+      var buses = [
+        { regNumberStart: 1000, regNumberEnd: 1071, model: 'Mercedes-Benz O530 Citaro', bodywork: 'EvoBus', notes: 'Batch 3', periodOfRegistration: '2015 - 2017', periodOfDeregistration: 'N/A' },
+        { regNumberStart: 1080, regNumberEnd: 1245, model: 'Mercedes-Benz O530 Citaro', bodywork: 'EvoBus', notes: 'Batch 3', periodOfRegistration: '2015 - 2017', periodOfDeregistration: 'N/A' },
+        { regNumberStart: 1691, regNumberEnd: 1699, model: 'Mercedes-Benz O530 Citaro', bodywork: 'EvoBus', notes: 'Batch 3', periodOfRegistration: '2015 - 2017', periodOfDeregistration: 'N/A' },
+        { regNumberStart: 1700, regNumberEnd: 1748, model: 'MAN NL323F', bodywork: 'MAN Lion\'s City Hybrid', notes: 'Euro V Batch 3', periodOfRegistration: '2016', periodOfDeregistration: '' },
+        { regNumberStart: 1749, regNumberEnd: 1898, model: 'MAN Lion\'s City', bodywork: 'Euro VI', notes: '2018 - 2020', periodOfRegistration: '', periodOfDeregistration: '' },
+        { regNumberStart: 2017, regNumberEnd: 2017, model: 'MAN ND323F', bodywork: 'MAN Lion\'s City DD', notes: 'Euro V Batch 3', periodOfRegistration: '2017', periodOfDeregistration: '' },
+        { regNumberStart: 3000, regNumberEnd: 3049, model: 'Volvo B5LH', bodywork: 'MCV Evora', notes: '', periodOfRegistration: '2018 - 2019', periodOfDeregistration: '' },
+        { regNumberStart: 3050, regNumberEnd: 3069, model: 'BYD K9', bodywork: 'Gemilang', notes: '', periodOfRegistration: '2020', periodOfDeregistration: '' },
+        { regNumberStart: 3070, regNumberEnd: 3089, model: 'Linkker LM312', bodywork: 'Linkker LinkLight', notes: '', periodOfRegistration: '2021', periodOfDeregistration: '' },
+        { regNumberStart: 3090, regNumberEnd: 3099, model: 'Yutong ZK6128BEVG', bodywork: 'Yutong Integral', notes: '', periodOfRegistration: '2020', periodOfDeregistration: '' },
+        { regNumberStart: 3100, regNumberEnd: 3100, model: 'MAN NL323F (Retrofitted Electric)', bodywork: 'MAN Lion\'s City Hybrid', notes: 'Re-registered', periodOfRegistration: '2013', periodOfDeregistration: '' },
+        { regNumberStart: 4001, regNumberEnd: 4001, model: 'BYD K9', bodywork: 'BYD', notes: 'Demonstrator model', periodOfRegistration: '2016', periodOfDeregistration: '2017' },
+        { regNumberStart: 4002, regNumberEnd: 4002, model: 'MAN NL323F', bodywork: 'MAN Lion\'s City SD 3Dr', notes: 'LTA 3-Door Concept Bus\nDemonstrator model', periodOfRegistration: '2017', periodOfDeregistration: '2017' },
+        { regNumberStart: 4003, regNumberEnd: 4003, model: 'Volvo B8L', bodywork: 'Wright Eclipse Gemini 3 Mark 2', notes: 'Demonstrator model', periodOfRegistration: '2017', periodOfDeregistration: '2020' },
+        { regNumberStart: 4004, regNumberEnd: 4004, model: 'Mercedes-Benz O530 Citaro Hybrid', bodywork: 'EvoBus', notes: '2020', periodOfRegistration: '2020', periodOfDeregistration: '2021' },
+        { regNumberStart: 4005, regNumberEnd: 4005, model: 'BYD K9RC', bodywork: 'Gemilang', notes: '2022', periodOfRegistration: '2022', periodOfDeregistration: 'N/A' },
+        { regNumberStart: 4006, regNumberEnd: 4006, model: 'CRRC TEG6125BEV03', bodywork: '', notes: '2021', periodOfRegistration: '2021', periodOfDeregistration: '' },
+        { regNumberStart: 4007, regNumberEnd: 4007, model: 'Volvo BZL', bodywork: 'SC Neustar City', notes: '2023', periodOfRegistration: '2023', periodOfDeregistration: '' },
+        { regNumberStart: 4010, regNumberEnd: 4010, model: 'Zhongtong LCK6126EVG', bodywork: 'Zhongtong Integral', notes: '', periodOfRegistration: '', periodOfDeregistration: '' },
+        { regNumberStart: 5000, regNumberEnd: 5185, model: 'Volvo B9TL', bodywork: 'Wright Eclipse Gemini 2', notes: 'Batch 4', periodOfRegistration: '2015 - 2017', periodOfDeregistration: '' },
+        { regNumberStart: 5300, regNumberEnd: 5610, model: 'Volvo B9TL', bodywork: 'Wright Eclipse Gemini 2', notes: 'Batch 4', periodOfRegistration: '2015 - 2017', periodOfDeregistration: '' },
+        { regNumberStart: 5700, regNumberEnd: 5714, model: 'Alexander Dennis Enviro500', bodywork: 'Enviro500 MMC', notes: 'Batch 2', periodOfRegistration: '2017', periodOfDeregistration: '' },
+        { regNumberStart: 5740, regNumberEnd: 5799, model: 'MAN ND323F', bodywork: 'MAN Lion\'s City DD', notes: '', periodOfRegistration: '2016', periodOfDeregistration: '' },
+        { regNumberStart: 5800, regNumberEnd: 5920, model: 'Euro V Batch 3', bodywork: '', notes: '2017', periodOfRegistration: '2017', periodOfDeregistration: '' },
+        { regNumberStart: 5921, regNumberEnd: 5998, model: 'Euro VI Batch 1', bodywork: '', notes: '2018', periodOfRegistration: '2018', periodOfDeregistration: '' },
+        { regNumberStart: 5999, regNumberEnd: 5999, model: 'MAN Lion\'s City DD L', bodywork: 'LTA 3-Door Concept Bus\nDemonstrator model', notes: '2017', periodOfRegistration: '2017', periodOfDeregistration: '' },
+        { regNumberStart: 6000, regNumberEnd: 6171, model: 'MAN Lion\'s City DD', bodywork: 'Euro VI Batch 1', notes: '2018 - 2020', periodOfRegistration: '2018 - 2020', periodOfDeregistration: '' },
+        { regNumberStart: 6172, regNumberEnd: 6282, model: 'Euro VI Batch 2', bodywork: '', notes: '2020 - 2021', periodOfRegistration: '2020 - 2021', periodOfDeregistration: '' },
+        { regNumberStart: 6283, regNumberEnd: 6332, model: '3-Door Production Batch', bodywork: '', notes: '2021', periodOfRegistration: '2021', periodOfDeregistration: '' },
+        { regNumberStart: 6333, regNumberEnd: 6382, model: 'Alexander Dennis Enviro500', bodywork: 'Enviro500 3D2S', notes: '', periodOfRegistration: '2021 - 2022', periodOfDeregistration: '' },
+        { regNumberStart: 7000, regNumberEnd: 7009, model: 'Yutong ZK6125BEVGS', bodywork: 'Yutong Integral', notes: '', periodOfRegistration: 'N/A', periodOfDeregistration: '2020' },
+      ];
+
+      var resultElement = document.getElementById('result');
+      var busFound = false;
+
+      // Loop through the buses array to find a match
+      for (var i = 0; i < buses.length; i++) {
+        var start = buses[i].regNumberStart;
+        var end = buses[i].regNumberEnd;
+        for (var regNum = start; regNum <= end; regNum++) {
+          if (regNum.toString() === regNumber) {
+            busFound = true;
+            resultElement.innerHTML = `
+              <p><strong>Bus Registration Number:</strong> ${regNumber}</p>
+              <p><strong>Model:</strong> ${buses[i].model}</p>
+              <p><strong>Bodywork:</strong> ${buses[i].bodywork}</p>
+              <p><strong>Notes:</strong> ${buses[i].notes}</p>
+              <p><strong>Period of Registration:</strong> ${buses[i].periodOfRegistration}</p>
+              <p><strong>Period of Deregistration:</strong> ${buses[i].periodOfDeregistration}</p>
+            `;
+            break;
+          }
+        }
+        if (busFound) {
+          break;
+        }
+      }
+
+      if (!busFound) {
+        resultElement.innerHTML = '<p class="error">Bus not found.</p>';
+      }
+    }
+  </script>
+</body>
+</html>
