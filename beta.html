@@ -27,10 +27,13 @@
 
   <script>
     function fetchBusServices() {
-      fetch("https://datamall2.mytransport.sg/ltaodataservice/BusServices?$skip=500", {
-        headers: {
-          'AccountKey': '1wo2iVrSTjeP0HHhAwdwoQ=='
-        }
+      const url = "https://datamall2.mytransport.sg/ltaodataservice/BusServices?$skip=500";
+      const headers = new Headers();
+      headers.append('AccountKey', '1wo2iVrSTjeP0HHhAwdwoQ==');
+
+      fetch(url, {
+        headers: headers,
+        mode: 'cors'
       })
       .then(response => response.json())
       .then(data => {
