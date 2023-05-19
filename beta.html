@@ -37,10 +37,14 @@
         const table = document.getElementById("busServicesTable");
         data.value.forEach(service => {
           const row = table.insertRow();
-          row.insertCell().textContent = service.ServiceNo;
-          row.insertCell().textContent = service.Operator;
-          row.insertCell().textContent = service.Category;
-          row.insertCell().textContent = service.Direction;
+          const serviceNoCell = row.insertCell();
+          serviceNoCell.textContent = service.ServiceNo;
+          const operatorCell = row.insertCell();
+          operatorCell.textContent = service.Operator;
+          const categoryCell = row.insertCell();
+          categoryCell.textContent = service.Category;
+          const directionCell = row.insertCell();
+          directionCell.textContent = service.Direction;
         });
       })
       .catch(error => {
